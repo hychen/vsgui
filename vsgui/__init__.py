@@ -11,11 +11,15 @@ def info(text):
 def error(text):
     _call.error(text=text)
 
+def die(text):
+    _call.error(text=text)
+    exit()
+
 def warning(text):
     _call.warning(text=text)
 
 def pulsate_progress(text, auto_close=False, auto_kill=False):
-    _call.progress(text=text,
+    return _call.progress(text=text,
                           auto_close=auto_close,
                           auto_kill=auto_kill, pulsate=True)
 
@@ -27,18 +31,18 @@ def progress(text, auto_close=False, auto_kill=False):
 def input_text(text, initial=None):
     kdws = {
         'text':text,
-        'subcmd':'entry'
     }
     if initial:
         kdws['entry-text'] = initial
+    _call.subcmd = 'entry'
     return _call(**kdws)
 
 def input_passwd(text):
     kdws = {
         'text':'please input password: '+ '\n' + text,
-        'subcmd':'entry',
         'hide-text':True
     }
+    _call.subcmd = 'entry'
     return _call(**kdws)
 
 def input_yesno(text, y=None, n=None):
@@ -68,12 +72,13 @@ def input_ab(text, a, b):
         return a
     return b
 
-def check_passwd(wanted, count=3, text=None, errmsg='wrong password, try again!'):
+def check_passwd(wanted, count=3, text='', errmsg='wrong password, try again!'):
     for i in range(0, count):
         if (input_passwd(text) != wanted):
-            error(errmsg)
+            die(errmsg) if i == 2 else error(errmsg)
         else:
             return True
 
 if __name__ == '__main__':
-    print input_checklist(['name','list'],[1,2,3,4,5,6,7,8], hide_column=1)
+    print input_checklist(['name','list'],[1,2,3,4,5,6,7,8])#, hide_column=1)
+   # check_passwd('h', 2)

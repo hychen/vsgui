@@ -18,15 +18,10 @@ from vsgui import *
 anwsers = ["loves you", "don't love you"]
 
 notice("Hey! Example of VSGUI is running!")
-
-if not input_yesno("Do you want to start this example to see how it work?",
-                    y="Sure", n="No! I don't want"):
-    warning("OK! but please read the codes if you have time.")
-
+input_yesno("Do you want to start this example to see how it work?", y="Sure", n="No! I don't want") \
+						or die("OK! but please read the codes if you have time.")
 username = input_text("Your name:")
-if not check_passwd(username, text="(passwd is %s)" % username):
-    error("Die!")
-    sys.exit()
+check_passwd(username, text="(passwd is %s)" % username)
 
 usersex = input_ab("What is your sex?", 'male', 'famel')
 liked_sex = input_radiolist(['sex'], ['','male', '','famel', '', 'unknow'], text="What is your lover's sex?")
@@ -47,7 +42,7 @@ def get_anwser():
 
 accept = False
 while not accept:
-    anwser = get_anwser()
+    anwser = get_anwser() or die("can not get anwser!")
     msg = ['Your are %s, a %s' % (username, usersex),
            'your lover is a %s' % liked_sex,
            'and he/her %s' % anwser]
