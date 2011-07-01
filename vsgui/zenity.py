@@ -21,13 +21,10 @@ class Zenity(ucltip.CmdDispatcher):
     zenity.info() maps to `zenity --info`
     zenity.info(text="hello") maps to `zenity --info --text='hello'
     """
-    #{{{attrs
     cmdname = 'zenity'
     subcmd_prefix = '--'
     __DEBUG__=True
-    #}}}
 
-    #{{{def question(self, *args, **kdws):
     def question(self, *args, **kdws):
         """display question dialog
 
@@ -40,9 +37,7 @@ class Zenity(ucltip.CmdDispatcher):
         kdws['with_extend_output'] = True
         retval = self(*args, **kdws)
         return not retval[0]
-    #}}}
 
-    #{{{def calendar(self, *args, **kwds):
     def calendar(self, *args, **kwds):
         """display calendar dialog
 
@@ -61,9 +56,7 @@ class Zenity(ucltip.CmdDispatcher):
         retval = self(*args, **_kwds)
         (month, day, year) = map(int, retval.split('/'))
         return datetime.date(year, month, day)
-    #}}}
 
-   #{{{def text_info(self, *args, **kwds):
     def text_info(self, *args, **kwds):
         """dispaly Display text information dialog
 
@@ -77,9 +70,7 @@ class Zenity(ucltip.CmdDispatcher):
         if opts.get('save') and _kwds.get('filename'):
             utils.savefile(_kwds.get('filename'), content, backup=opts.get('backup'))
         return content
-    #}}}
 
-    #{{{def progress(self, *args, **kwds):
     def progress(self, *args, **kwds):
         """display progress dialog
 
@@ -113,9 +104,7 @@ class Zenity(ucltip.CmdDispatcher):
                 exit()
             return p.returncode
         return update
-    #}}}
 
-    #{{{def file_selection(self, *args, **kwds):
     def file_selection(self, *args, **kwds):
         """display file or directory selection dialog
 
@@ -124,9 +113,7 @@ class Zenity(ucltip.CmdDispatcher):
         self.subcmd = 'file-selection'
         retstr = self(*args, **kwds)
         return [] if not retstr else retstr.strip().split('|')
-    #}}}
 
-    #{{{def list(self, columns, data=[], **kwds):
     def list(self, columns, data=[], **kwds):
         """display selection dialog
 
@@ -144,15 +131,12 @@ class Zenity(ucltip.CmdDispatcher):
         if kwds.get('checklist'):
             return [] if not retstr else retstr.split('|')
         return retstr
-    #}}}
 
-    #{{{def _callProcess(self, *args, **kwargs):
     def _callProcess(self, *args, **kwargs):
         try:
             return super(Zenity, self)._callProcess(*args, **kwargs)
         except ucltip.CommandExecutedFalur:
             exit()
-    #}}}
 pass
 
 if __name__ == '__main__':
@@ -162,7 +146,7 @@ if __name__ == '__main__':
 #    print obj.list(['a'],[1,2,3,4,5,6], text="hello", editable=True)
     print obj.question(text='hi')
 #    up= obj.progress(text="hi")
-#    import time 
+#    import time
 #    up(10, "iii")
 #    time.sleep(1)
 #    up(20, "iii")

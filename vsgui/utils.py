@@ -1,6 +1,5 @@
 import os
 
-#{{{def parse_kwds(kwds, extra):
 def parse_kwds(kwds, extra):
     """parse options from kwds
 
@@ -14,9 +13,7 @@ def parse_kwds(kwds, extra):
         except KeyError:
             pass
     return kwds, opts
-#}}}
 
-#{{{def savefile(filename, content, backup='.bak'):
 def savefile(filename, content, backup='.bak'):
     """save file
 
@@ -33,7 +30,6 @@ def savefile(filename, content, backup='.bak'):
         newstr = content
         if newstr != oldstr:
             new.write(newstr)
-#}}}
 
 if __name__ == '__main__':
     kwds = {'save':True,'nono':'oo'}
