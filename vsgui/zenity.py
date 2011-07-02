@@ -21,22 +21,16 @@ class Zenity(ucltip.CmdDispatcher):
     zenity.info() maps to `zenity --info`
     zenity.info(text="hello") maps to `zenity --info --text='hello'
     """
-    cmdname = 'zenity'
-    subcmd_prefix = '--'
-    __DEBUG__=True
+    def __init__(self):
+        super(Zenity, self).__init__('zenity')
+        self.subcmd_prefix = '--'
+        self.conf.opt_style = 'gnu'
 
-    def question(self, *args, **kdws):
-        """display question dialog
-
-        @param  text title text
-        @param  y    text of OK label
-        @param  n    text of Cancel label
-        @return True or False
-        """
-        self.subcmd='question'
-        kdws['with_extend_output'] = True
-        retval = self(*args, **kdws)
-        return not retval[0]
+        setattr(self, 'entry', lambda *args, **kwargs:    self.__call('entry', *args, **kwargs))
+        setattr(self, 'error', lambda *args, **kwargs:    self.__call('error', *args, **kwargs))
+        setattr(self, 'info', lambda *args, **kwargs:    self.__call('info', *args, **kwargs))
+        setattr(self, 'notification', lambda *args, **kwargs:    self.__call('notification', *args, **kwargs))
+        setattr(self, 'warning', lambda *args, **kwargs:    self.__call('warning', *args, **kwargs))
 
     def calendar(self, *args, **kwds):
         """display calendar dialog
@@ -52,10 +46,24 @@ class Zenity(ucltip.CmdDispatcher):
             _kwds['day'] = selected.day
             _kwds['month'] = selected.month
             _kwds['year'] = selected.year
-        self.subcmd = 'calendar'
-        retval = self(*args, **_kwds)
-        (month, day, year) = map(int, retval.split('/'))
-        return datetime.date(year, month, day)
+        retval = self.__call('calendar', *args, **_kwds)
+        if self.conf.dry_run:
+            return retval
+        if retval:
+            (month, day, year) = map(int, retval.split('/'))
+            return datetime.date(year, month, day)
+
+    def question(self, *args, **kdws):
+        """display question dialog
+
+        @param  text title text
+        @param  y    text of OK label
+        @param  n    text of Cancel label
+        @return True or False
+        """
+        kdws['with_extend_output'] = True
+        retval = self.__call('question', *args, **kdws)
+        return not retval[0]
 
     def text_info(self, *args, **kwds):
         """dispaly Display text information dialog
@@ -65,8 +73,7 @@ class Zenity(ucltip.CmdDispatcher):
         @return content content user inputed
         """
         (_kwds, opts) = utils.parse_kwds(kwds, ['save', 'backup'])
-        self.subcmd = 'text-info'
-        content = self(*args, **_kwds)
+        content = self.__call('text-info', *args, **_kwds)
         if opts.get('save') and _kwds.get('filename'):
             utils.savefile(_kwds.get('filename'), content, backup=opts.get('backup'))
         return content
@@ -90,8 +97,7 @@ class Zenity(ucltip.CmdDispatcher):
             time.sleep(1)
         """
         kwds['stdin'] = subprocess.PIPE
-        self.subcmd = 'progress'
-        p = self(interact=True, *args, **kwds)
+        p = self.__call('progress', interact=True, *args, **kwds)
 
         def update(percent, message=''):
             if type(percent) == float:
@@ -110,8 +116,7 @@ class Zenity(ucltip.CmdDispatcher):
 
         @return list of selection path of files or directories
         """
-        self.subcmd = 'file-selection'
-        retstr = self(*args, **kwds)
+        retstr = self.__call('file-selection', *args, **kwds)
         return [] if not retstr else retstr.strip().split('|')
 
     def list(self, columns, data=[], **kwds):
@@ -126,31 +131,36 @@ class Zenity(ucltip.CmdDispatcher):
             args.append("--column=%s" % col)
 
         args += data
-        self.subcmd = 'list'
-        retstr = self(*args, **kwds)
+        retstr = self.__call('list', *args, **kwds)
         if kwds.get('checklist'):
             return [] if not retstr else retstr.split('|')
         return retstr
 
-    def _callProcess(self, *args, **kwargs):
+    def __call(self, name, *args, **kwargs):
+        if name[:1] == '_':
+            raise AttributeError(name)
         try:
-            return super(Zenity, self)._callProcess(*args, **kwargs)
-        except ucltip.CommandExecutedFalur:
-            exit()
-pass
+            method = self._subcmds.setdefault(name, ucltip.SubCmd(name, self))
+        except KeyError:
+            raise AttributeError
+        else:
+            try:
+                return method(*args, **kwargs)
+            except ucltip.CommandExecutedFalur, e:
+                if e.errmsg:
+                    print e.errmsg
+                return False
 
 if __name__ == '__main__':
     obj = Zenity()
-#    print obj.text_info()
-#    print obj.file_selection()
-#    print obj.list(['a'],[1,2,3,4,5,6], text="hello", editable=True)
-    print obj.question(text='hi')
-#    up= obj.progress(text="hi")
-#    import time
-#    up(10, "iii")
+    import datetime
+    import time
+    #print obj.error(text='hi')
+    #print obj.question()
+    #print obj.text_info()
+    #print obj.calendar(selected_day=datetime.date(2015,3,25))
+
+#    up= obj.progress()
+#    up(30,'hi')
 #    time.sleep(1)
-#    up(20, "iii")
-#    time.sleep(1)
-#    up(30, "iii")
-#    time.sleep(1)
-#    up(40, "iii")
+#    up(40, 'no')
