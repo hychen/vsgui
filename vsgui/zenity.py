@@ -145,7 +145,7 @@ class Zenity(ucltip.CmdDispatcher):
             raise AttributeError
         else:
             try:
-                return method(*args, **kwargs)
+                return method(*args, **kwargs).replace('\n','')
             except ucltip.CommandExecutedFalur, e:
                 if e.errmsg:
                     print e.errmsg
@@ -158,9 +158,10 @@ if __name__ == '__main__':
     #print obj.error(text='hi')
     #print obj.question()
     #print obj.text_info()
-    #print obj.calendar(selected_day=datetime.date(2015,3,25))
+    print obj.calendar(selected_day=datetime.date(2015,3,25))
 
-#    up= obj.progress()
-#    up(30,'hi')
-#    time.sleep(1)
-#    up(40, 'no')
+    #up= obj.progress()
+    #up(30,'hi')
+    #time.sleep(1)
+    #up(40, 'no')
+    #print obj.list(('a','b'), [1,2,3,4], checklist=True)
