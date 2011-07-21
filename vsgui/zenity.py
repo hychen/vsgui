@@ -145,7 +145,8 @@ class Zenity(ucltip.CmdDispatcher):
             raise AttributeError
         else:
             try:
-                return method(*args, **kwargs).replace('\n','')
+                ret =  method(*args, **kwargs)
+                return ret.replace('\n','') if type(ret) is str else ret
             except ucltip.CommandExecutedFalur, e:
                 if e.errmsg:
                     print e.errmsg
@@ -164,4 +165,4 @@ if __name__ == '__main__':
     #up(30,'hi')
     #time.sleep(1)
     #up(40, 'no')
-    #print obj.list(('a','b'), [1,2,3,4], checklist=True)
+    print obj.list(('a','b'), [1,2,3,4], checklist=True)
