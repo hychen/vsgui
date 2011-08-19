@@ -18,10 +18,10 @@ def info(msg):
     _dialoger.info(text=msg)
 
 def warning(msg):
-    _dialoger.info(text=msg)
+    _dialoger.warning(text=msg)
 
 def error(msg):
-    _dialoger.info(text=msg)
+    _dialoger.error(text=msg)
 
 def die(msg):
     error(msg)
