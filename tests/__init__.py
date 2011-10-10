@@ -27,8 +27,7 @@ class ZenityTestCase(unittest.TestCase):
     def test_info(self):
         # get window id
         z = zenity.Zenity()
-        p = z.info(text='hi', interact=True)
-        print p
+        p = z.info(text='hi', as_process=True)
         # send clik
         pass
 

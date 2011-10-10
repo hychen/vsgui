@@ -97,7 +97,7 @@ class Zenity(ucltip.CmdDispatcher):
             time.sleep(1)
         """
         kwds['stdin'] = subprocess.PIPE
-        p = self.__call('progress', interact=True, *args, **kwds)
+        p = self.__call('progress', as_process=True, *args, **kwds)
 
         def update(percent, message=''):
             if type(percent) == float:
@@ -147,7 +147,7 @@ class Zenity(ucltip.CmdDispatcher):
             try:
                 ret =  method(*args, **kwargs)
                 return ret.replace('\n','') if type(ret) is str else ret
-            except ucltip.CommandExecutedFalur, e:
+            except ucltip.CommandExecutedError, e:
                 if e.errmsg:
                     print e.errmsg
                 return False
