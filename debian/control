@@ -1,0 +1,17 @@
+Source: python-vsgui
+Section: python
+Priority: optional
+Maintainer: Hsin-Yi Chen (hychen) <ossug.hychen@gmail.com>
+Build-Depends: python-all (>= 2.6.6-3), debhelper (>= 7)
+Standards-Version: 3.9.2
+Homepage: http://pypi.python.org/pypi/vsgui
+Vcs-Git: git://github.com/hychen/vsgui.git
+X-Python-Version: >= 2.5
+
+Package: python-vsgui
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}, python-ucltip (>= 0.6-1)
+Recommends: zenity
+Description: Python module to create very simple gtk+dialog widgets
+ VSGUII wraps the Zenity utility to create common gtk+ dialog widgets and
+ get information from users. It has a simple yet powerful API
