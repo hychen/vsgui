@@ -114,3 +114,11 @@ more powerful feature.
 
 	# same as executing 'zenity --file-selection --filename=a.txt'
 	z.file_selection(filename='a.txt')
+
+Get invlolved
+=============
+
+if you are interesting to help, please contact author,
+   Hychen, his email is  <ossug.hychen at gmail.com>.
+
+   The VCS of code is avaliabl on  http://github.com/hychen/vsgui
