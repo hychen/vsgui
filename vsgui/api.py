@@ -80,3 +80,6 @@ def progress(text, auto_close=False, auto_kill=False):
     return _dialoger.progress(text=text,
                           auto_close=auto_close,
                           auto_kill=auto_kill)
+
+def ask_scale_value(label, initial_value=None):
+    return _dialoger.scale(text=label, value=initial_value)

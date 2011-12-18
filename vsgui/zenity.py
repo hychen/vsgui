@@ -136,6 +136,17 @@ class Zenity(ucltip.CmdDispatcher):
             return [] if not retstr else retstr.split('|')
         return retstr
 
+    def scale(self, *args, **kwargs):
+        """Display scale dialog
+
+        @return int scale value
+        """
+        ret = self.__call('scale', *args, **kwargs)
+        if ret:
+            return int(ret)
+        else:
+            raise Exception
+
     def __call(self, name, *args, **kwargs):
         if name[:1] == '_':
             raise AttributeError(name)
