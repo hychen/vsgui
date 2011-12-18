@@ -38,7 +38,7 @@ right now please use `setup.py` to install
 How To Use
 ----------
 
-The source code includes some examples, so you can take a qucik look before you
+The source code includes some examples which are in example directory, so you can take a qucik look before you
 start coding, and thre are two part of this library as below
 
 1. High Level API functions
@@ -66,7 +66,7 @@ Dialogs
 	# error dialog and terminate script
 	die(msg):
 
-	# notice dialog
+	# notice dialog (does not work in Unity)
 	notice(msg):
 
 Input Text
@@ -75,8 +75,15 @@ Input Text
 	# input text
 	input_text(text, initial=None)
 
-	# input password
+	# input password,
 	input_passwd(text)
+
+	# check password
+	#
+	# - 1234 is the password we except user to type
+	# - 5 means user can try to input 5 times if the password is wrong
+	# - password is wrong is just a error message shows in an error dialog
+	check_passwd('1234', 5, 'password is wrong')
 
 Questions
 
@@ -101,6 +108,8 @@ Progress
 	# update progress bar message ot 'md5sum checking' and progessive number to 90
 	update(90, 'md5sum checking')
 
+	# launch a progress bar
+	pulsate_progress('starting')
 
 2. Zenity Class
 ---------------
