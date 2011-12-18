@@ -73,10 +73,10 @@ Input Text
 
 ::
 	# input text
-	input_text(text, initial=None)
+	ask_text(text, initial=None)
 
 	# input password,
-	input_passwd(text)
+	ask_passwd(text)
 
 	# check password
 	#
@@ -90,10 +90,10 @@ Questions
 ::
 
 	# ask user the anwser is yes or no
-	input_yesno(text, y=None, n=None):
+	ask_yesno(text, y=None, n=None):
 
 	# ask user select a or b
-	input_ab(text, a, b):
+	ask_ab(text, a, b):
 
 	# ask user passowrd, and check it
 	check_passwd(wanted, count=3, text='', errmsg='wrong password, try again!')
@@ -110,6 +110,28 @@ Progress
 
 	# launch a progress bar
 	pulsate_progress('starting')
+
+File
+----
+
+::
+
+	# ask user to select a file path
+	ask_filepath()
+
+	# ask user to select multiple file paths
+	ask_filepaths()
+
+	# ask user to select a directory path
+	ask_dirpath()
+
+	# ask user to select multiple directory paths
+	ask_dirpaths()
+
+Other
+-----
+
+	ask_scalevalue('label')
 
 2. Zenity Class
 ---------------
@@ -130,4 +152,4 @@ Get invlolved
 if you are interesting to help, please contact author,
    Hychen, his email is  <ossug.hychen at gmail.com>.
 
-   The VCS of code is avaliabl on  http://github.com/hychen/vsgui
+The VCS of code is avaliabl on  http://github.com/hychen/vsgui
