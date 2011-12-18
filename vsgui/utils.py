@@ -1,4 +1,37 @@
 import os
+import warnings
+import functools
+
+# enable to show warring
+warnings.simplefilter('default')
+
+def deprecated(replacement=None):
+    """This is a decorator which can be used to mark functions
+    as deprecated. It will result in a warning being emitted
+    when the function is used.
+
+    ref:
+        - recipe-391367-1 on active stack code
+        - recipe-577819-1 on active stack code
+
+    @replacement function replacement function
+    """
+    def wrapper(old_func):
+        wrapped_func = replacement and replacement or old_func
+        @functools.wraps(wrapped_func)
+        def new_func(*args, **kwargs):
+            msg = "Call to deprecated function %(funcname)s." % {
+                    'funcname': func.__name__}
+            if replacement:
+                msg += "; use {} instead".format(replacement.__name__)
+            warnings.warn_explicit(msg,
+                category=DeprecationWarning,
+                filename=func.func_code.co_filename,
+                lineno=func.func_code.co_firstlineno + 1
+            )
+            return wrapped_func(*args, **kwargs)
+        return new_func
+    return wrapper
 
 def parse_kwds(kwds, extra):
     """parse options from kwds
