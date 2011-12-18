@@ -10,8 +10,30 @@ is a program that will display GTK+ dialogs, and return
 This allows you to present information, and ask for information from
 the user, from all manner of shell scripts.
 
-Note: this moduels requires `ucltip` (http://pypi.python.org/pypi/ucltip)
-      module, please install it.
+Requirement
+-----------
+
+* Python >=2.5
+* Python UCLTIP module >= 0.6-1 (http://pypi.python.org/pypi/ucltip)
+* Zenity
+
+How To install
+--------------
+
+for Ubuntu Users
+
+::
+
+	$ apt-get install python-ucltip
+
+for Debian Users
+
+::
+	$ apt-get install zenity
+	$ apt-get install python-ucltip
+
+VSGUI is not in Debian/Ubuntu archive.
+right now please use `setup.py` to install
 
 How To Use
 ----------
