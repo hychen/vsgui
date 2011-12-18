@@ -41,6 +41,8 @@ update(80, "setp 4")
 time.sleep(1)
 update(100, "Done")
 
+ask_scalevalue('scale')
+
 # file
 info(ask_filepath())
 ask_filepaths()

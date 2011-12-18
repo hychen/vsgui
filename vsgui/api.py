@@ -98,8 +98,8 @@ def progress(text, auto_close=False, auto_kill=False):
                           auto_close=auto_close,
                           auto_kill=auto_kill)
 
-def ask_scale_value(label, initial_value=None):
-    return _dialoger.scale(text=label, value=initial_value)
+def ask_scalevalue(label, initial_value=0, **kwargs):
+    return _dialoger.scale(text=label, value=initial_value, **kwargs)
 
 # file
 #-------------------------------------------------------------
