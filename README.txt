@@ -1,54 +1,133 @@
-#!/usr/bin/env python
-"""
-Example of VSGUI to describe what it does....
+VSGUI - Very Simple Graphic Interface Library for Python
+========================================================
 
-@author Hsin-Yi Chen (hychen) <ossug.hychen@gmail.com>
+Description
+-----------
 
-How to use
+It proides a simple functions to comuunicate with `zenity` which
+is a program that will display GTK+ dialogs, and return
+(either in the return code, or on standard output) the users input.
+This allows you to present information, and ask for information from
+the user, from all manner of shell scripts.
 
-user@host$ python READEME.txt
+Requirement
+-----------
 
-"""
-import sys
-import time
-import random
+* Python >=2.5
+* Python UCLTIP module >= 0.6-1 (http://pypi.python.org/pypi/ucltip)
+* Zenity
 
-from vsgui import *
+How To install
+--------------
 
-anwsers = ["loves you", "don't love you"]
+for Ubuntu Users
 
-notice("Hey! Example of VSGUI is running!")
-input_yesno("Do you want to start this example to see how it work?", y="Sure", n="No! I don't want") \
-						or die("OK! but please read the codes if you have time.")
-username = input_text("Your name:")
-check_passwd(username, text="(passwd is %s)" % username)
+::
 
-usersex = input_ab("What is your sex?", 'male', 'famel')
-liked_sex = input_radiolist(['sex'], ['','male', '','famel', '', 'unknow'], text="What is your lover's sex?")
+	$ apt-get install python-ucltip
 
-def get_anwser():
-    update = progress('Starting to ask Mazo-Po', auto_close=True)
-    update('20', "sending your questions to sky")
-    time.sleep(1)
-    update('40', "Mazo-Po hear questions")
-    time.sleep(1)
-    update('60', "Mazo-Po is asking A-pi-PO")
-    time.sleep(1)
-    update('80', "A-pi-Po is thinking")
-    anwser = random.choice(anwsers)
-    time.sleep(1)
-    update('100', "A-pi-Po get a anwser")
-    return anwser
+for Debian Users
 
-accept = False
-while not accept:
-    anwser = get_anwser() or die("can not get anwser!")
-    msg = ['Your are %s, a %s' % (username, usersex),
-           'your lover is a %s' % liked_sex,
-           'and he/her %s' % anwser]
-    msg.append("Do you accept this?")
+::
+	$ apt-get install zenity
+	$ apt-get install python-ucltip
 
-    accept = input_yesno(','.join(msg), y='Yes', n='Fuck!')
+VSGUI is not in Debian/Ubuntu archive.
+right now please use `setup.py` to install
 
-# save result
-# @TODO write example for saving file
+How To Use
+----------
+
+The source code includes some examples which are in example directory, so you can take a qucik look before you
+start coding, and thre are two part of this library as below
+
+1. High Level API functions
+---------------------------
+
+Before start, you need to import api funcitons:
+
+::
+	from vsgui.api import *
+
+Dialogs
+
+::
+	from vsgui.api import *
+
+	# information dialog
+	info(msg)
+
+	# warring dialog
+	warning(msg):
+
+	# error dialog
+	error(msg):
+
+	# error dialog and terminate script
+	die(msg):
+
+	# notice dialog (does not work in Unity)
+	notice(msg):
+
+Input Text
+
+::
+	# input text
+	input_text(text, initial=None)
+
+	# input password,
+	input_passwd(text)
+
+	# check password
+	#
+	# - 1234 is the password we except user to type
+	# - 5 means user can try to input 5 times if the password is wrong
+	# - password is wrong is just a error message shows in an error dialog
+	check_passwd('1234', 5, 'password is wrong')
+
+Questions
+
+::
+
+	# ask user the anwser is yes or no
+	input_yesno(text, y=None, n=None):
+
+	# ask user select a or b
+	input_ab(text, a, b):
+
+	# ask user passowrd, and check it
+	check_passwd(wanted, count=3, text='', errmsg='wrong password, try again!')
+
+Progress
+-------
+
+::
+	# launch a progress bar and create a update function
+	update = progress('downloading files')
+
+	# update progress bar message ot 'md5sum checking' and progessive number to 90
+	update(90, 'md5sum checking')
+
+	# launch a progress bar
+	pulsate_progress('starting')
+
+2. Zenity Class
+---------------
+
+if api functions is not enough, you can use Zenity class direcly to get
+more powerful feature.
+
+::
+	from vsgui.zenity import Zenity
+	z = Zenity()
+
+	# same as executing 'zenity --file-selection --filename=a.txt'
+	z.file_selection(filename='a.txt')
+
+Get invlolved
+=============
+
+if you are interesting to help, please contact author,
+   Hychen, his email is  <ossug.hychen at gmail.com>.
+
+   The VCS of code is avaliabl on  http://github.com/hychen/vsgui
