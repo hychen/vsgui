@@ -24,8 +24,8 @@ info("this is a information dialog")
 warning("this is a warning dialog")
 error("this is a error dialog")
 
-ret=input_text("This is a input dialog", "please input some thing")
-while not input_yesno("Do you input {0}".format(ret), 'sure', 'not this one'):
+ret=ask_text("This is a input dialog", "please input some thing")
+while not ask_yesno("Do you input {0}".format(ret), 'sure', 'not this one'):
     pass
 
 update=progress("processing text....")
@@ -40,3 +40,11 @@ time.sleep(1)
 update(80, "setp 4")
 time.sleep(1)
 update(100, "Done")
+
+ask_scalevalue('scale')
+
+# file
+info(ask_filepath())
+ask_filepaths()
+ask_dirpath()
+ask_dirpaths()
