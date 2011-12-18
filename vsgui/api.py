@@ -100,3 +100,26 @@ def progress(text, auto_close=False, auto_kill=False):
 
 def ask_scale_value(label, initial_value=None):
     return _dialoger.scale(text=label, value=initial_value)
+
+# file
+#-------------------------------------------------------------
+def first_or_none(list):
+    try:
+        return list[0]
+    except IndexError:
+        return None
+
+def ask_filepath(**kwargs):
+    return first_or_none(ask_filepaths(**kwargs))
+
+def ask_filepaths(**kwargs):
+    kwargs['multiple'] = True
+    return _dialoger.file_selection(**kwargs)
+
+def ask_dirpath(**kwargs):
+    return first_or_none(ask_dirpaths(**kwargs))
+
+def ask_dirpaths(**kwargs):
+    kwargs['directory'] = True
+    kwargs['multiple'] = True
+    return _dialoger.file_selection(**kwargs)

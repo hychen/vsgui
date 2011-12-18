@@ -40,3 +40,9 @@ time.sleep(1)
 update(80, "setp 4")
 time.sleep(1)
 update(100, "Done")
+
+# file
+info(ask_filepath())
+ask_filepaths()
+ask_dirpath()
+ask_dirpaths()
