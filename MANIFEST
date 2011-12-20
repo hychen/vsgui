@@ -1,6 +1,0 @@
-README.txt
-VERSION.txt
-setup.py
-vsgui/__init__.py
-vsgui/utils.py
-vsgui/zenity.py

@@ -1,0 +1,3 @@
+include *
+recursive-include example *.txt *.py
+exclude .gitignore MANIFEST *.swp
