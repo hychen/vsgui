@@ -71,7 +71,7 @@ def input_yesno():
     pass
 
 def ask_ab(text, a, b):
-    if input_yesno(text, y=a,n=b):
+    if ask_yesno(text, y=a,n=b):
         return a
     return b
 

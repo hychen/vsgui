@@ -21,13 +21,13 @@ def deprecated(replacement=None):
         @functools.wraps(wrapped_func)
         def new_func(*args, **kwargs):
             msg = "Call to deprecated function %(funcname)s." % {
-                    'funcname': func.__name__}
+                    'funcname': old_func.__name__}
             if replacement:
                 msg += "; use {} instead".format(replacement.__name__)
             warnings.warn_explicit(msg,
                 category=DeprecationWarning,
-                filename=func.func_code.co_filename,
-                lineno=func.func_code.co_firstlineno + 1
+                filename=old_func.func_code.co_filename,
+                lineno=old_func.func_code.co_firstlineno + 1
             )
             return wrapped_func(*args, **kwargs)
         return new_func

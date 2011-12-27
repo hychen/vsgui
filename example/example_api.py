@@ -42,6 +42,7 @@ time.sleep(1)
 update(100, "Done")
 
 ask_scalevalue('scale')
+ask_ab('hi', 'M' , 'F')
 
 # file
 info(ask_filepath())
